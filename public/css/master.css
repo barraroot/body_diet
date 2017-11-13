@@ -1,0 +1,333 @@
+@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,300,500,700);
+/* line 10, ../sass/master.scss */
+body {
+  font-family: 'Ubuntu';
+  font-weight: 400;
+}
+
+/* line 15, ../sass/master.scss */
+.topbar {
+  background: #EAEAEA;
+  height: 30px;
+}
+/* line 18, ../sass/master.scss */
+.topbar .nav {
+  height: 30px;
+}
+/* line 21, ../sass/master.scss */
+.topbar .nav li a {
+  color: #F48434;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+/* line 29, ../sass/master.scss */
+.navbar-fixed-top {
+  top: 30px;
+  height: 70px;
+  -moz-transition: all 0.1s ease-in;
+  -o-transition: all 0.1s ease-in;
+  -webkit-transition: all 0.1s ease-in;
+  transition: all 0.1s ease-in;
+}
+/* line 37, ../sass/master.scss */
+.navbar-fixed-top .nav {
+  margin-left: 20px;
+}
+/* line 40, ../sass/master.scss */
+.navbar-fixed-top .nav li a {
+  font-weight: bolder;
+  text-transform: uppercase;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  border-left: 1px solid #EAEAEA;
+}
+/* line 48, ../sass/master.scss */
+.navbar-fixed-top .nav li:first-child a {
+  border-left: 0;
+}
+/* line 54, ../sass/master.scss */
+.navbar-fixed-top .navbar-right {
+  padding-top: 18px;
+  width: 300px;
+}
+
+/* line 59, ../sass/master.scss */
+#topslider {
+  margin-top: 70px;
+}
+
+/* line 62, ../sass/master.scss */
+section {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+/* line 65, ../sass/master.scss */
+section h2 {
+  margin-bottom: 20px;
+}
+/* line 68, ../sass/master.scss */
+section .row {
+  margin-bottom: 30px;
+}
+/* line 71, ../sass/master.scss */
+section#newsletter {
+  height: 300px;
+  background: url(../images/newsletter.jpg) no-repeat center top;
+  background-size: cover;
+  background-attachment: fixed;
+  color: #FFF;
+  position: relative;
+}
+/* line 78, ../sass/master.scss */
+section#newsletter h2 {
+  position: relative;
+  z-index: 10;
+  font-size: 38px;
+  margin-top: 70px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+/* line 85, ../sass/master.scss */
+section#newsletter .newform {
+  width: 400px;
+  margin: 0 auto;
+}
+/* line 89, ../sass/master.scss */
+section#newsletter .social {
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+  position: relative;
+  z-index: 10;
+}
+/* line 95, ../sass/master.scss */
+section#newsletter .social a {
+  color: #FFF;
+  margin-right: 20px;
+}
+/* line 103, ../sass/master.scss */
+section#topfive h4 a {
+  color: #333;
+}
+/* line 105, ../sass/master.scss */
+section#topfive h4 a:hover {
+  text-decoration: none;
+}
+
+/* line 112, ../sass/master.scss */
+#info {
+  margin-top: 40px;
+}
+
+/* line 115, ../sass/master.scss */
+#inside-page {
+  margin-top: 60px;
+}
+
+/* line 118, ../sass/master.scss */
+footer {
+  background: #F48434;
+  color: #FFF;
+  margin-top: 40px;
+}
+/* line 122, ../sass/master.scss */
+footer h2 {
+  font-size: 20px;
+}
+/* line 125, ../sass/master.scss */
+footer a {
+  color: #FFF;
+}
+/* line 127, ../sass/master.scss */
+footer a:hover {
+  color: #009640;
+  text-decoration: none;
+}
+/* line 132, ../sass/master.scss */
+footer .bottom-footer {
+  background-color: #e8680d;
+  padding: 12px 0 5px;
+  margin-top: 40px;
+  -moz-box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.12), 0 -1px 2px rgba(0, 0, 0, 0.24);
+  -webkit-box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.12), 0 -1px 2px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.12), 0 -1px 2px rgba(0, 0, 0, 0.24);
+}
+
+/* line 139, ../sass/master.scss */
+.bg-overlay {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/* line 153, ../sass/master.scss */
+#inside-page h2 {
+  width: 100%;
+  height: 300px;
+  background: url("../images/bginside.jpg") no-repeat;
+  background-size: cover;
+  background-position: center center;
+  color: #FFF;
+  padding-top: 120px;
+  font-size: 54px;
+  text-shadow: 1px 2px #F48434;
+}
+/* line 164, ../sass/master.scss */
+#inside-page h3 {
+  color: #009640;
+}
+/* line 167, ../sass/master.scss */
+#inside-page .card {
+  margin-bottom: 5px;
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+/* line 171, ../sass/master.scss */
+#inside-page .card .card-img {
+  height: 230px;
+  overflow: hidden;
+}
+/* line 174, ../sass/master.scss */
+#inside-page .card .card-img img {
+  margin-top: 20px;
+}
+/* line 179, ../sass/master.scss */
+#inside-page .card h3 a {
+  font-size: 20px;
+  color: #F48434;
+}
+/* line 182, ../sass/master.scss */
+#inside-page .card h3 a:hover, #inside-page .card h3 a:active, #inside-page .card h3 a:focus {
+  text-decoration: none;
+}
+/* line 187, ../sass/master.scss */
+#inside-page .card .caption {
+  padding: 10px;
+}
+/* line 189, ../sass/master.scss */
+#inside-page .card .caption h3 {
+  height: 120px;
+  text-align: center;
+}
+/* line 192, ../sass/master.scss */
+#inside-page .card .caption h3 em {
+  color: #009640;
+  font-size: 34px;
+  margin-top: 20px;
+  display: block;
+  overflow: hidden;
+}
+/* line 201, ../sass/master.scss */
+#inside-page .card img {
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+/* line 206, ../sass/master.scss */
+#inside-page .caldos .card-img {
+  height: 190px;
+}
+/* line 212, ../sass/master.scss */
+#inside-page .col-md-4 .card .card-img {
+  height: 320px;
+}
+/* line 218, ../sass/master.scss */
+#inside-page.contato small {
+  font-size: 10px;
+  color: #F48434;
+  text-align: right;
+  margin-top: 5px;
+}
+/* line 226, ../sass/master.scss */
+#inside-page.como-funciona .card {
+  padding: 10px;
+  text-align: center !important;
+  background-color: #F8F8F8;
+}
+/* line 235, ../sass/master.scss */
+#inside-page.combos .card .caption h3 {
+  height: auto;
+}
+/* line 243, ../sass/master.scss */
+#inside-page.produtos .carousel .carousel-control {
+  width: 0;
+  color: #009640;
+  background: transparent;
+}
+/* line 248, ../sass/master.scss */
+#inside-page.produtos .carousel .card {
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+/* line 252, ../sass/master.scss */
+#inside-page.produtos .carousel .card .card-img {
+  background-size: 300%;
+  background-position: center;
+}
+/* line 259, ../sass/master.scss */
+#inside-page.produtos #linhapremium .card-img {
+  background-size: 200%;
+}
+/* line 264, ../sass/master.scss */
+#inside-page.produtos #caldos .card-img {
+  background-size: 380%;
+}
+
+/* line 271, ../sass/master.scss */
+.img-overflow {
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center top;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  -moz-transition: all 0.5s ease-in;
+  -o-transition: all 0.5s ease-in;
+  -webkit-transition: all 0.5s ease-in;
+  transition: all 0.5s ease-in;
+}
+/* line 282, ../sass/master.scss */
+.nutricional li {
+  border-bottom: 1px solid #AAA;
+}
+/* line 286, ../sass/master.scss */
+.modal-title {
+  color: #F48434;
+  font-size: 20px;
+  text-align: center;
+  font-weight: bolder;
+}
+/* line 292, ../sass/master.scss */
+.preco {
+  font-size: 42px;
+  color: #009640;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.pd-bottom-bar {
+  padding: 8px;
+}
+
+.pd-btn-concluir {
+  padding-top: 0px;
+}
+.page {
+  margin-top: 60px;
+}
