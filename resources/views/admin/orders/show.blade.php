@@ -25,7 +25,7 @@
                             <td>{{$order->client->email}}</td>
                             <td>{{$order->client->endereco . ' '. $order->client->complemento . ' N.'. $order->client->numero. ' '. $order->client->bairro . ' '. $order->client->cidade.'/'.$order->client->estado. ' CEP:'. $order->client->cep}}</td>
                             <td>{{$order->client->telefone}}</td>
-                            <td>{{$order->client->celular}}</td>
+                            <td><a href="https://api.whatsapp.com/send?phone=55{{str_replace("-", "", str_replace(")", "", str_replace("(", "", $order->client->celular)))}}" target="_blank">{{$order->client->celular}}</a></td>
                         </tr>
                     </tbody>
                     @endif
@@ -48,6 +48,7 @@
                             <th>Entrega</th>
                             <th>Total Produtos</th>
                             <th>Frete</th>
+                            <th>Desconto</th>
                             <th>Total</th>
                         </tr>
                     </thead>
@@ -61,6 +62,7 @@
                             <td class="bg-warning">{{$order->endereco . ' N.'. $order->numero . ' '. $order->complemento . ' '. $order->bairro . ' '. $order->cidade .'/'. $order->estado .' CEP: '. $order->cep}}</td>
                             <td>{{number_format($order->total_produtos, 2, ',', '.')}}</td>
                             <td>{{number_format($order->frete, 2, ',', '.')}}</td>
+                            <td>{{number_format($order->desconto, 2, ',', '.')}}</td>
                             <td>{{number_format($order->total, 2, ',', '.')}}</td>
                         </tr>
                     </tbody>

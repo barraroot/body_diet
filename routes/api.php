@@ -16,3 +16,13 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('novo-carrinho', 'LojaApiController@novocarrinho');
+
+Route::get('novo-carrinho-logado/{usuario}', 'LojaApiController@novocarrinhologado');
+
+Route::post('add-item/{carrinho}', 'LojaApiController@formitemadd');
+
+Route::get('calcula-carrinho/{carrinho}', 'LojaApiController@calculaCarrinho');
+
+Route::get('removeritem/{carrinho}/{item}', 'LojaApiController@removeritem');

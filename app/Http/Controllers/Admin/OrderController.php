@@ -32,6 +32,7 @@ class OrderController extends Controller
           })
           ->where($where)
           ->with('client')
+          ->with('coupon')
           ->paginate($limit);
         //dd($result);
         //exit;

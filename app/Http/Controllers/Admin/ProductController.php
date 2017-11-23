@@ -16,6 +16,23 @@ class ProductController extends AppController
         $this->resultView = [];
     }
 
+    public function beforeSave(Request $request)
+    {
+        $this->trataCampoDecimal('price');
+        $this->trataCampoDecimal('kcal');
+        $this->trataCampoDecimal('kcal_grama');
+        $this->trataCampoDecimal('carboidrato');
+        $this->trataCampoDecimal('carboidrato_grama');
+        $this->trataCampoDecimal('proteina');
+        $this->trataCampoDecimal('proteina_grama');
+        $this->trataCampoDecimal('gorduras');
+        $this->trataCampoDecimal('gorduras_grama');
+        $this->trataCampoDecimal('liquido');
+        $this->trataCampoDecimal('liquido_grama');
+        $this->trataCampoDecimal('sodio');
+        $this->trataCampoDecimal('sodio_grama');
+    }
+
     public function afterSave(Request $request, $result)
     {
         request()->validate([

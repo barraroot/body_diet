@@ -26,7 +26,7 @@
                     ['link' => route('admincities.index'), 'title' => 'Cidades/Frete'],
                     ['link' => route('adminclients.index'), 'title' => 'Clientes'],
                     ['link' => route('adminorders.index'), 'title' => 'Pedidos'],
-                    ['link' => route('admincontacts.index'), 'title' => 'Contatos'],
+                    ['link' => route('admincoupons.index'), 'title' => 'Cupons'],
                 ];
                 $navbar->withContent(Navigation::links($arrayLinks));
 
@@ -60,6 +60,7 @@
                 $subArray = [ 
                     [
                         'Submenu', [ 
+                            ['link' => route('admincontacts.index'), 'title' => 'Contatos'],
                             ['link' => route('adminmidia.index'), 'title' => 'Midias/Banners'],
                             ['link' => route('adminfaq.index'), 'title' => 'FAQ'],
                             ['link' => route('adminproducts.index'), 'title' => 'E-mails'],

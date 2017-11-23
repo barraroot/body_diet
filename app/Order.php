@@ -3,11 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Order extends Model
 {
-    protected $fillable = ['id', 'client_id', 'status', 'total_produtos', 'frete', 'total', 'pontos', 'obs', 'cep', 'endereco', 'numero', 'complemento', 'cidade', 'estado', 'telefone', 'bairro', 'email', 'nome', 'forma_pagamento'
-						  ];
+    use Notifiable;
+
+    protected $fillable = ['id', 'client_id', 'status', 'total_produtos', 'frete', 'total', 'pontos', 'obs', 'cep', 'endereco', 'numero', 'complemento', 'cidade', 'estado', 'telefone', 'bairro', 'email', 'nome', 'forma_pagamento', 'coupon_id', 'desconto', 'desconto_p'];
 
     public function orderItems()
     {
@@ -19,4 +21,8 @@ class Order extends Model
         return $this->belongsTo('App\Client');
     }    
 
+    public function coupon()
+    {
+        return $this->belongsTo('App\Coupon');
+    }  
 }

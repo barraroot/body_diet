@@ -11,6 +11,7 @@ use App\Midia;
 use App\Failures;
 use App\Order;
 use App\OrderItem;
+use App\Notifications\OrderCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -54,9 +55,11 @@ class LojaController extends Controller
 
         $cart = Order::create($data);
 
+        $cart->notify(new OrderCreated());
+
         $request->session()->put('carrinho', $cart->id);
         
-        return redirect()->route('loja.produtos')->with('status', 'Pronto agora você pode montar seu carrinho como desejar, apenas adicionando os itens com as respectivas quantidades');;
+        return redirect()->route('loja.produtos')->with('status', 'Pronto agora você pode montar seu carrinho como desejar, apenas adicionando os itens com as respectivas quantidades');
     }
 
     public function novocarrinhologado(Request $request)
@@ -80,6 +83,7 @@ class LojaController extends Controller
             $data['pontos'] = 0;
 
             $cart = Order::create($data);
+            $cart->notify(new OrderCreated());
 
             $request->session()->put('carrinho', $cart->id);
 
@@ -169,8 +173,9 @@ class LojaController extends Controller
         if(!session()->has('carrinho'))
             return redirect()->route('loja.produtos')->with('status', 'Seu carrinho não foi encontrado.');
         $cart = Order::findOrFail(session()->get('carrinho'));
+
         $total_produtos = 0;
-        $total_pontos = 0;        
+        $total_pontos = 0;       
 
         $items = \App\OrderItem::where('order_id', '=', $cart->id)->get();
 
@@ -205,7 +210,10 @@ class LojaController extends Controller
         {
             $frete = $cidade[0]->frete;
             $data['frete'] = $frete;
-            $data['total'] =  $total_final + $frete;
+            $totalPedido = ($total_final + $frete);
+            $desconto = ($totalPedido * ($cart->desconto_p / 100));
+            $data['desconto'] = $desconto;
+            $data['total'] =  $totalPedido - $desconto;
         }
 
         $cart->update($data);
@@ -344,7 +352,7 @@ class LojaController extends Controller
 
     public function midia(Request $request)
     {
-        $midias = Midia::where('type', '=', 'Midia')->get();
+        $midias = Midia::where('type', '=', 'Midia')->orderBy('title', 'asc')->get();
         return view('site.loja.midia', compact('midias'));
     }       
 
@@ -381,5 +389,40 @@ class LojaController extends Controller
         }
 
         return view('site.loja.pedidonaoatendido');
+    }
+
+    public function retornaCarrinho($id)
+    {
+        $pedido = Order::findOrFail($id);
+
+        session()->put('carrinho', $pedido->id);
+
+        return redirect()->route('loja.produtos')->with('status', 'Seu pedido ja foi reaberto.');
+    }
+
+    public function fecharCarrinhoAjax($carrinho)
+    {
+        session()->put('carrinho', $carrinho);
+        return redirect()->route('loja.concluircompra');
+    }
+
+    public function aplicaDesconto(Request $request)
+    {
+        $order = Order::findOrFail($request->all()['carrinho']);
+
+        $cupom = \App\Coupon::where('name', '=', $request->all()['desconto'])->get();
+
+        if(count($cupom) <= 0)
+            return redirect()->route('loja.carrinho')->with('status', 'Cupom invliado.');
+        else
+            $cupom = $cupom[0];
+        if(strtotime($cupom['validade']) <= strtotime(date('Y-m-d')))
+            return redirect()->route('loja.carrinho')->with('status', 'A data de validade deste cupom expirou.');
+
+        $order->update(['coupon_id' => $cupom['id'], 'desconto_p' => $cupom['desconto']]);      
+
+        $this->atualizaCarrinho();
+
+        return redirect()->route('loja.carrinho');        
     }
 }

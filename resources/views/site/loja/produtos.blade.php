@@ -34,52 +34,47 @@
 			@foreach ($data as $category)
 				@if(count($category->products) > 0)
 				<h3>{{$category->category}}</h3>
-					<div class="row">
-						<div class="col-md-1"></div>
-						<div class="col-md-9">
-							<table class="table">
-								<tbody>
-									@foreach($category->products as $product)
-										@php
-												$nomeProduto = preg_replace(array("/(á|à|ã|â|ä)/","/(Á|À|Ã|Â|Ä)/","/(é|è|ê|ë)/","/(É|È|Ê|Ë)/","/(í|ì|î|ï)/","/(Í|Ì|Î|Ï)/","/(ó|ò|õ|ô|ö)/","/(Ó|Ò|Õ|Ô|Ö)/","/(ú|ù|û|ü)/","/(Ú|Ù|Û|Ü)/","/(ñ)/","/(Ñ)/"),explode(" ","a A e E i I o O u U n N"),$product->title);
-												
-												$nomeProduto = strtolower(str_replace("/", "", str_replace(" ", "-", $nomeProduto)));
+						@foreach($category->products as $product)
+						@php
+								$nomeProduto = preg_replace(array("/(á|à|ã|â|ä)/","/(Á|À|Ã|Â|Ä)/","/(é|è|ê|ë)/","/(É|È|Ê|Ë)/","/(í|ì|î|ï)/","/(Í|Ì|Î|Ï)/","/(ó|ò|õ|ô|ö)/","/(Ó|Ò|Õ|Ô|Ö)/","/(ú|ù|û|ü)/","/(Ú|Ù|Û|Ü)/","/(ñ)/","/(Ñ)/"),explode(" ","a A e E i I o O u U n N"),$product->title);
+								
+								$nomeProduto = strtolower(str_replace("/", "", str_replace(" ", "-", $nomeProduto)));
 
-												$qtde = 0;
-												if($cart !== null)
-												{
-													foreach($cart->orderItems as $itemCart)
-													{
-														if($product->id == $itemCart->product_id)
-															$qtde = $itemCart->qtde; 
-													}
-												}
-										@endphp										
-										<tr>
-											<td class="text-right">
-												<img src="{{asset('images/produtos/'.$product->id.'.png')}}" class="img-responsive" alt="{{$product->title}}" width="60px" />
-											</td>
-											<td class="text-left"><b><a href="{{route('loja.produto', [$nomeProduto,  $product->id])}}">{{$product->title}}</a></b></td>
-											<td class="text-right">R$ {{number_format($product->price, 2, ',', '.')}}</td>
-											<td class="text-right">
-	
-												<form class="form-inline frmProduto" action="{{route('loja.formitemadd', [$product->id, $nomeProduto])}}" id="frmComprar" method="post">
-													{{ csrf_field() }}
-													<input type="hidden" name="produto_id" value="{{$product->id}}">
-													<div class="form-group">
-														<label for="qtde">Quant.:</label>
-														<input style="width: 60px;" type="number" class="form-control" id="qtde" value="{{$qtde}}" name="qtde">
-													</div>
-													<button type="submit" class="btn btn-success">Comprar</button>
-												</form>										
-											</td>
-										</tr>
-										@endforeach
-								</tbody>
-							</table>
+								$qtde = 0;
+								if($cart !== null)
+								{
+									foreach($cart->orderItems as $itemCart)
+									{
+										if($product->id == $itemCart->product_id)
+											$qtde = $itemCart->qtde; 
+									}
+								}
+						@endphp
+						<div class="row">
+							<div class="col-md-3 hidden-xs text-right">
+								<img src="{{asset('images/produtos/'.$product->img)}}" class="img-rounded" alt="{{$product->title}}" width="30%" />
+							</div>
+							<div class="col-md-4 col-xs-7">
+								<b><a href="{{route('loja.produto', [$nomeProduto,  $product->id])}}">{{$product->title}}</a></b>
+								<br/>
+								<small>{{$product->description}}</small>									
+							</div>
+							<div class="col-md-2 col-xs-2 text-right">R$ {{number_format($product->price, 2, ',', '.')}}</div>
+							<div class="col-md-3 col-xs-3">
+								<form class="form-inline frmProduto" action="{{route('loja.formitemadd', [$product->id, $nomeProduto])}}" id="frmComprar{{$product->id}}" method="post">
+									{{ csrf_field() }}
+									<input type="hidden" name="produto_id" value="{{$product->id}}" >
+									<input type="hidden" id="preco{{$product->id}}" name="preco{{$product->id}}" value="{{$product->price}}" >													
+									<div class="form-group">
+										<input style="width: 60px;" type="number" class="form-control" id="qtde{{$product->id}}" value="{{$qtde}}" name="qtde" readonly="readonly">
+									</div>
+									<button type="submit" produto-id="{{$product->id}}" operacao="+" class="btn btn-success comprar" >+</button>
+									<button type="submit" produto-id="{{$product->id}}" operacao="-" class="btn btn-success comprar">-</button>
+								</form>
+							</div>
 						</div>
-						<div class="col-md-2"></div>
-					</div>
+						<hr />					
+						@endforeach
 					@endif
 			@endforeach
 		</div>	
@@ -89,7 +84,7 @@
 <input type="hidden" id="txtEndBairro" name="bairro" value="" />
 <input type="hidden" id="txtEndCidade" name="cidade" value="" />
 <input type="hidden" id="txtEndEstado" name="estado" value="" />
-<div class="modal fade" tabindex="-1" id="cidadeNaoAtendida" role="dialog">
+<div class="modal fade" tabindex="-1" id="abreCarrinhoNaoLogado" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -126,7 +121,7 @@
 		<p class="bg-danger" id="erroFormEnd"></p>        
       </div>
       <div class="modal-footer">
-        {!! Form::submit('Enviar', ['class' => 'btn btn-success btn-block']) !!}
+        {!! Form::submit('Enviar', ['class' => 'btn btn-success btn-block bt-abre-carrinho']) !!}
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -138,25 +133,6 @@
 	
 	$('#txtCep').mask('00000-000');
 	$('#txtPhone').mask('(00)00000-0000');
-
-	let modalCarrinho = @php echo (empty($cart) ? "true" : "false"); @endphp;
-	let validaEndereco = @php echo (empty($cart) ? "false" : "true"); @endphp;
-	let usuarioLogado  = @php echo (session()->has('login') ? "true" : "false"); @endphp;
-
-	$('.frmProduto').submit(function(e){
-		if(modalCarrinho){
-			if(!usuarioLogado) {
-				$('#cidadeNaoAtendida').modal('show');
-				return false;
-			} else {
-				$.get('{{route('loja.abrircarrinhologado')}}', function(data){ });
-				return true;
-			}
-		} else {
-			return true;
-		}
-	});
-
 	$('#txtCep').focusout(function(){
 		let cep = $(this).val();
 		cep = cep.replace("-", "").replace(".", "").replace(",", "").trim();
@@ -180,50 +156,142 @@
 		}
 	});
 
-	$('#frmAbreCarrinho').on('submit', function() {
 
-		if(!validaEndereco) {
+	let semCarrinho = @php echo (empty($cart) ? "true" : "false"); @endphp;
+	let validaEndereco = @php echo (empty($cart) ? "false" : "true"); @endphp;
+	let usuarioLogado  = @php echo (session()->has('login') ? session()->has('login') : "0"); @endphp;
 
-			return false;
-		}
+	var formProduto = null;
+	var carrinhoId = @php echo (empty($cart) ? 0 : $cart->id); @endphp;;
+	var url = "{{url('/fechar-carrinho/')}}";
 
-	});
+	if(carrinhoId > 0)
+		atualizaCarrinho();
 
-	$('#frmCalcFrete').submit(function(e){
+
+	$('.comprar').click(function(e){
 		e.preventDefault();
 
-		$('#myModal').modal('hide');
+		var produtoId = $(this).attr('produto-id');
+		var qtdeAtual = $('#qtde' + produtoId).val();
 
-		let cep = $('#cep').val();
-		if(cep.length == 8) {
-			$.get('https://viacep.com.br/ws/' + cep + '/json/')
-				.then(function(res) {
-					if(res.erro == true) {
-						alert('CEP não encontrado.');
-					} else {
-						console.log(cidadesAtendidas.indexOf(res.localidade));
-						if(cidadesAtendidas.indexOf(res.localidade) < 0) {
-							$('#cidadeNaoAtendida').modal('show');
-						} else {
-							localStorage.setItem("endereco", res.logradouro);
-							localStorage.setItem("estado", res.uf);
-							localStorage.setItem("cidade", res.localidade);
-							localStorage.setItem("bairro", res.bairro);
-							localStorage.setItem("cep", res.cep);
-						}
-						
-						calcFrete = true;
-					}
-			});
+		$(this).prop('disabled',true);
+
+		if($(this).attr('operacao') == '+')
+		{
+			qtdeAtual++;
 		}
+		else
+		{
+			qtdeAtual--;
+			if(qtdeAtual < 0)
+				qtdeAtual = 0;
+		}
+		$('#qtde' + produtoId).val(qtdeAtual);
+
+		formProduto = $('#frmComprar' + produtoId);
+
+		if(semCarrinho)
+		{
+			if(usuarioLogado > 0)
+			{
+				$.get('/api/novo-carrinho-logado/' + usuarioLogado, function(data){ 
+					console.log(data);
+					if(data.status == 'sucesso')
+					{
+						carrinhoId = data.pedido;
+						urlItem = "/api/add-item/" + carrinhoId;
+						semCarrinho = false;
+						$.post(urlItem, formProduto.serialize(), function(data){
+							atualizaCarrinho();
+						});
+					}
+					else
+					{
+						window.location.href = "{{route('loja.auxloginapi')}}";
+					}
+				});
+			}
+			else
+			{
+				$('#abreCarrinhoNaoLogado').modal('show');
+			}
+		}
+		else
+		{
+			if(qtdeAtual <= 0)
+			{
+				urlItem = "/api/removeritem/" + carrinhoId +'/'+ $(this).attr('produto-id');
+				$.get(urlItem, function(data){
+					atualizaCarrinho();
+				});	
+			}
+			else
+			{
+				urlItem = "/api/add-item/" + carrinhoId;
+				$.post(urlItem, formProduto.serialize(), function(data){
+					atualizaCarrinho();
+				});			
+			}
+		}
+		$(this).prop('disabled',false);
+	});
+
+	$('#frmAbreCarrinho').submit(function(e){
+		e.preventDefault();
+		
+		var url = "/api/novo-carrinho";
+		var dataEnv = {
+			endereco: $('#txtEndEndereco').val(),
+			bairro: $('#txtEndBairro').val(),
+			cidade: $('#txtEndCidade').val(),
+			estado: $('#txtEndEstado').val(),
+			cep: $('#txtCep').val(),
+			nome: $('#nome').val(),
+			email: $('#email').val(),
+			telefone: $('#txtPhone').val()
+		};
+
+		$('.bt-abre-carrinho').prop('disabled',true);
+		$('.bt-abre-carrinho').val('Aguarde...');
+
+		$.post(url, dataEnv, function(data, status, xhr){
+			if(data.status == "error")
+			{
+				window.location.href = "{{route('loja.auxloginapi')}}";
+			}
+			else
+			{
+				carrinhoId = data.pedido;
+				$('#abreCarrinhoNaoLogado').modal('toggle');
+				urlItem = "/api/add-item/" + carrinhoId;
+				semCarrinho = false;
+
+
+				$.post(urlItem, formProduto.serialize(), function(data){
+					atualizaCarrinho();
+				});
+			}
+		}).fail(function(e){
+			console.log(e);
+		});
+
+
 		return false;
 	});
 
-	$('#btnFinalizar').click(function(e){
-		if(!calcFrete) {
-			alert('calcule o frete antes de finalizar');
-			return false;
+	function atualizaCarrinho()
+	{
+		if(carrinhoId >= 0)
+		{
+				$('#carrinhoPratos').val('...');
+				$('#carrinhoTotal').val('...');			
+			$.get('/api/calcula-carrinho/' + carrinhoId, function(data){
+				$('#carrinhoPratos').val(data.pratos);
+				$('#carrinhoTotal').val('R$ ' + data.total);
+			});
+			$('.bt-fechar').attr('href', url + '/' + carrinhoId);
 		}
-	});
+	}
 
 @endsection

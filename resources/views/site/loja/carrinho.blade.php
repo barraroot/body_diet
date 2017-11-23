@@ -41,14 +41,35 @@
 			</table>
 			<hr />
 			<div class="row">
+				<div class="col-md-2"></div>
 				<div class="col-md-4">
-					
+					@if (session('status'))
+					    <div class="alert alert-danger">
+					        {{ session('status') }}
+					    </div>
+					@endif	
 				</div>
+				<div class="col-md-5 text-right">
+					<form class=" form form-inline" action="{{route('loja.descontopedido')}}" method="post">
+						{{ csrf_field() }}
+						<input type="hidden" name="carrinho" value="{{session()->get('carrinho')}}" />
+						<div class="form-group">
+							<input type="text" name="desconto" class="form-control">
+						</div>
+						<div class="form-group">
+							<button class="btn btn-primary" type="submit">Aplicar cupom</button>
+						</div>						
+					</form>	
+				</div>
+			</div>			
+			<div class="row">
+				<div class="col-md-4"></div>
 				<div class="col-md-4"></div>
 				<div class="col-md-4">
 					<h4 class="text-right"><b>Subtotal:</b> R$ {{number_format($carrinho['total_produtos'], 2, ',', '.')}}</h4>
 					<h4 class="text-right"><b>Frete:</b> <span id="valFRETE">R$ {{number_format($carrinho['frete'], 2, ',', '.')}}</span></h4>
-					<h4 class="text-right"><b>Total:</b> R$ {{number_format($carrinho['total'], 2, ',', '.')}}</h4>					
+					<h4 class="text-right"><b>Desconto:</b> <span id="valFRETE">R$ {{number_format($carrinho['desconto'], 2, ',', '.')}}</span></h4>
+					<h4 class="text-right"><b>Total:</b> R$ {{number_format($carrinho['total'], 2, ',', '.')}}</h4>	
 				</div>
 			</div>
 			<div class="row" id="msg">

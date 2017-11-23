@@ -15,4 +15,9 @@ class CityController extends AppController
         $this->routerController = 'cities';
         $this->defaultOrder = 'city';
     }
+
+    public function beforeSave(Request $request)
+    {
+    	$this->trataCampoDecimal('frete');
+    }    
 }

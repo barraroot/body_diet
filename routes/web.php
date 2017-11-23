@@ -27,6 +27,9 @@ Route::get('/produto/{title}/{id}', 'LojaController@detalheproduto')->name('loja
 Route::post('/cidade-nao-atendida', 'LojaController@cidadenaoatendida')->name('loja.cidadenaoatendida');
 Route::get('/concluir-compra', 'LojaController@atualizafrete')->name('loja.concluircompra');
 Route::get('/pedido-nao-atendido', 'LojaController@pedidoNaoAtendido')->name('loja.pedidonaoatendido');
+Route::get('/retornar-carrinho/{id}', 'LojaController@retornaCarrinho')->name('loja.retornacarrinho');
+Route::get('/fechar-carrinho/{id}', 'LojaController@fecharCarrinhoAjax')->name('loja.fecharcarrinhoajax');
+Route::post('/desconto-pedido', 'LojaController@aplicaDesconto')->name('loja.descontopedido');
 /** Checout **/
 Route::get('/checkout', function(Request $request){
     if(request()->session()->has('login'))
@@ -319,6 +322,11 @@ Route::post('/minha-conta/alterar-senha', function(Request $request){
 })->name('loja.minhaconta.editsenha');
 
 
+/** Aux para API **/
+Route::get('/abrelogin', function(){
+    return redirect()->route('loja.fazlogin')->with('status', 'E-mail já cadastrado, faça o login para continuar comprando.');
+})->name('loja.auxloginapi');
+
 /** Rotas Adm **/
 Route::prefix('admin')->group(function() {
 
@@ -340,6 +348,7 @@ Route::prefix('admin')->group(function() {
         Route::resource('falhas', 'FailureController');
         Route::resource('orders', 'OrderController');
         Route::resource('contacts', 'ContactController');
+        Route::resource('coupons', 'CouponController');
         Route::get('/contacts/visto/{id}', 'ContactController@visto')->name('contacts.visto');
         Route::post('/orders/status', 'OrderController@atualizastatus')->name('atualizaStatus');
     });

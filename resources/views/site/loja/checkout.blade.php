@@ -149,7 +149,7 @@
 						  		</div>
 						  	</div>
 						  	<hr />
-						    <p>Finalizando Integrações com as bandeiras.</p>
+						    <p>Account unsupported, contact suuport.</p>
 						  </div>
 						  <div id="menu2" class="tab-pane fade">
 						    <h4>Banco do Brasil</h4>
@@ -167,6 +167,16 @@
 					</div>
 					<div class="col-md-2"></div>
 				</div>
+				<div class="row">
+					<div class="col-md-4"></div>
+					<div class="col-md-6">
+						<h4 class="text-right"><b>Total Produtos:</b> R$ {{number_format($carrinho['total_produtos'], 2, ',', '.')}}</h4>
+						<h4 class="text-right"><b>Frete:</b> <span id="valFRETE">R$ {{number_format($carrinho['frete'], 2, ',', '.')}}</span></h4>
+						<h4 class="text-right"><b>Desconto:</b> <span id="valFRETE">R$ {{number_format($carrinho['desconto'], 2, ',', '.')}}</span></h4>
+						<h4 class="text-right"><b>Total:</b> R$ {{number_format($carrinho['total'], 2, ',', '.')}}</h4>							
+					</div>
+					<div class="col-md-2"></div>
+				</div>	
 			</div>
 		</div>	
 </div>

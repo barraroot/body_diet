@@ -2,7 +2,7 @@
 <html lang="pt_BR">
     <head>
         <meta charset="UTF-8">
-        <title>BodyDiet - Alientação Saudável</title>
+        <title>BodyDiet - Alimentação Saudável</title>
         <meta name="theme-color" content="#E8680D"> <!-- COR DO CHROME -->
         <meta name="keywords" content="" />
         <meta name="robots" content="index, follow" />
@@ -112,7 +112,7 @@
             }
         }
     @endphp
-    @if(isset($cart))
+
     <nav class="navbar navbar-default navbar-fixed-bottom">
         <div class="container">
             <div class="col-md-4"></div>
@@ -124,26 +124,26 @@
                     </div>
                     <div class="col-md-3 col-xs-3 pd-bottom-bar">
                         <span>PRATOS</span><br />
-                        <input type="text" class="form-control text-center" value="{{$itens}}" name="">
+                        <input type="text" class="form-control text-center" value="{{$itens}}" id="carrinhoPratos">
                     </div>
                     <div class="col-md-4 col-xs-4 pd-bottom-bar">
                         <span>TOTAL</span><br />
-                        <input type="text" class="form-control text-right" value="{{'R$ '.number_format($total, 2, ',', '.')}}" name="">
+                        <input type="text" class="form-control text-right" value="{{'R$ '.number_format($total, 2, ',', '.')}}" id="carrinhoTotal">
                     </div>
                     <div class="col-md-2 hidden-xs pd-btn-concluir">
                         <br />
-                        <a class="btn btn-success btn-lg" href="{{route('loja.concluircompra')}}">CONCLUIR COMPRA</a>
+                        <a class="btn btn-success btn-lg bt-fechar" href="/fechar-carrinho/">CONCLUIR COMPRA</a>
                     </div>
                     <div class="col-xs-5 hidden-md hidden-lg">
                         <br />
-                        <a class="btn btn-success" href="{{route('loja.concluircompra')}}">CONCLUIR</a>
+                        <a class="btn btn-success bt-fechar" href="/fechar-carrinho/">CONCLUIR</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-4"></div>
         </div>
     </nav>
-    @endif
+    
     <script type="text/javascript" src="{{asset('lib/jquery/dist/jquery.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/jquery.mask.min.js')}}"></script>   
     <script type="text/javascript" src="{{asset('lib/bootstrap/dist/js/bootstrap.min.js')}}"></script>

@@ -27,16 +27,22 @@
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-md-5">
-									<div class="img-overflow" style='background-image: url("{{asset('images/produtos/'.$product->id.'.png')}}");''>
+									<div class="img-overflow" style='background-image: url("{{asset('images/produtos/'.$product->img)}}");''>
 									</div>
 								</div>
 								<div class="col-md-7">
 									<p class="description">{{$product->description}}</p>
 									<p class="description">Na compra deste prato você ganha:&nbsp;{{$product->pontos}} pontos</p>
 									<br />
-									<span class="label label-success">Emagrecimento</span>
-									<span class="label label-warning gluten">Não contém glúten</span>
-									<span class="label label-info lactose">Não contém lactose</span>
+									@if($product->emagrecimento == 1)
+										<span class="label label-success">Emagrecimento</span>
+									@endif
+									@if($product->gluten == 1)
+										<span class="label label-warning gluten">Não contém glúten</span>
+									@endif
+									@if($product->lactose == 1)
+										<span class="label label-info lactose">Não contém lactose</span>
+									@endif
 									<h5>Tabela nutricional:</h5>
 									<div class="row nutricional">
 										<div class="col-md-6">

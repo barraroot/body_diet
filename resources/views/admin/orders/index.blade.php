@@ -16,8 +16,9 @@
                     <th>Cliente</th>
                     <th>Contatos</th>
                     <th>Entrega</th>
-                    <th>Total</th>
                     <th>Frete</th>
+                    <th>Desconto</th>
+                    <th>Total</th>
                     <th>Ações</th>
                 </tr>
                 @foreach($result as $item)
@@ -33,10 +34,11 @@
                     <td>{{$item->forma_pagamento}}</td>
                     <td>{{date_format($item->updated_at, 'd/m/Y')}}</td>
                     <td>{{$item->nome}}</td>
-                    <td>{{$item->email}}<br />{{$item->telefone}}</td>
+                    <td>{{$item->email}}<br /><a href="https://api.whatsapp.com/send?phone=55{{str_replace("-", "", str_replace(")", "", str_replace("(", "", $item->telefone)))}}" target="_blank">{{$item->telefone}}</a></td>
                     <td>{{$item->cidade .'/'. $item->estado}}</td>
-                    <td>{{number_format($item->total, 2, ",", ".")}}</td>
                     <td>{{number_format($item->frete, 2, ",", ".")}}</td>
+                    <td>{{number_format($item->desconto, 2, ",", ".")}}</td>
+                    <td>{{number_format($item->total, 2, ",", ".")}}</td>
                     <td><a href="{{route('adminorders.show', $item->id)}}">Detalhe</a>&nbsp;|&nbsp;<a href="#" onclick="abreMoidal({{$item->id}}, '{{$item->status}}')">Alterar Status</a></td>
                 </tr>
                 @endforeach

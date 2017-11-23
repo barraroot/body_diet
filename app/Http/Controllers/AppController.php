@@ -153,4 +153,10 @@ class AppController extends Controller
       }
       return [];
     }
+
+    protected function trataCampoDecimal($campo)
+    {
+        $this->dataForm[$campo] = str_replace(".", "", $this->dataForm[$campo]);
+        $this->dataForm[$campo] = str_replace(",", ".", $this->dataForm[$campo]);        
+    }
 }
