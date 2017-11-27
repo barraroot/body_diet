@@ -127,6 +127,51 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 {!! Form::close() !!}
+
+    @php
+        $itens = 0;
+        $total = 0;
+        if(Session::has('carrinho')) {
+            if(!empty($cart->orderItems)) {
+                foreach($cart->orderItems as $item) {
+                    $itens += $item->qtde;
+                    $total += $item->total;
+                }
+            }
+        }
+    @endphp
+
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-1 hidden-xs"></div>
+                    <div class="col-md-2 hidden-xs pd-bottom-bar">
+                        <img src="{{asset('images/buy.png')}}" align="carrinho" class="img img-responsive" />
+                    </div>
+                    <div class="col-md-3 col-xs-3 pd-bottom-bar">
+                        <span>PRATOS</span><br />
+                        <input type="text" class="form-control text-center" value="{{$itens}}" id="carrinhoPratos">
+                    </div>
+                    <div class="col-md-4 col-xs-4 pd-bottom-bar">
+                        <span>TOTAL</span><br />
+                        <input type="text" class="form-control text-right" value="{{'R$ '.number_format($total, 2, ',', '.')}}" id="carrinhoTotal">
+                    </div>
+                    <div class="col-md-2 hidden-xs pd-btn-concluir">
+                        <br />
+                        <a class="btn btn-success btn-lg bt-fechar" href="/fechar-carrinho/">CONCLUIR COMPRA</a>
+                    </div>
+                    <div class="col-xs-5 hidden-md hidden-lg">
+                        <br />
+                        <a class="btn btn-success bt-fechar" href="/fechar-carrinho/">CONCLUIR</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </nav>
+
 @endsection
 
 @section('script')

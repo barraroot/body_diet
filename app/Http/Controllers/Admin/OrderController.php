@@ -43,7 +43,7 @@ class OrderController extends Controller
     {
         $order = \App\Order::findOrFail($id);
         
-        $items = \App\OrderItem::where('order_id', '=', $id)->get();
+        $items = \App\OrderItem::with('product')->where('order_id', '=', $id)->get();
 
         return view('admin.orders.show', compact('order', 'items')); 
     }

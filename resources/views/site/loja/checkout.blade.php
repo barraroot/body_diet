@@ -10,7 +10,7 @@
 					<div class="col-md-8">
 						<ul class="nav nav-tabs">
 						  <li><a data-toggle="tab" href="#home" id="tabCC">Cartão de crédito</a></li>
-						  <li><a data-toggle="tab" href="#menu1" id="tabDC">Débito em conta</a></li>
+						  <!--<li><a data-toggle="tab" href="#menu1" id="tabDC">Débito em conta</a></li>-->
 						  <li><a data-toggle="tab" href="#menu2" id="tabDB">Depósito bancario</a></li>
 						</ul>
 						<br />
@@ -140,8 +140,8 @@
 							</div>
 							{!! Form::close() !!}
 							<!--FIM Informações para cartão de crédito -->
-
 						  </div>
+						  <!--
 						  <div id="menu1" class="tab-pane fade">
 						  	<div class="row">
 						  		<div class="col-md-12">
@@ -151,6 +151,7 @@
 						  	<hr />
 						    <p>Account unsupported, contact suuport.</p>
 						  </div>
+						-->
 						  <div id="menu2" class="tab-pane fade">
 						    <h4>Banco do Brasil</h4>
 						    <div class="well">

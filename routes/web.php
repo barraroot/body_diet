@@ -38,7 +38,8 @@ Route::get('/checkout', function(Request $request){
             return redirect()->route('loja.produtos')->with('status', 'É preciso colocar itens no seu carrinho para poder finalizar a compra.');
 
         $carrinho = App\Order::findOrFail(request()->session()->get('carrinho'));
-        if($carrinho->frete <= 0)
+        $cidade = App\Cities::where('city', '=', $carrinho->cidade)->get();
+        if(count($cidade) <= 0)
         {
             return redirect()->route('loja.pedidonaoatendido');
         }

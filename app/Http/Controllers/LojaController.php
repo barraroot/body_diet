@@ -208,7 +208,7 @@ class LojaController extends Controller
         $cidade = \App\Cities::where('city', '=', $cart->cidade)->get();
         if(count($cidade) > 0)
         {
-            $frete = $cidade[0]->frete;
+            $frete = ($total_final >= 290 ? 0 : $cidade[0]->frete);
             $data['frete'] = $frete;
             $totalPedido = ($total_final + $frete);
             $desconto = ($totalPedido * ($cart->desconto_p / 100));
@@ -324,6 +324,7 @@ class LojaController extends Controller
     public function logout(Request $request)
     {
         $request->session()->forget('login');
+        $request->session()->forget('carrinho');
         return redirect()->route('loja.produtos');
     }
 
