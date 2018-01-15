@@ -11,7 +11,8 @@
                 <thead>
                     <tr>
                         <td>Cidade</td>
-                        <td>Frte</td>
+                        <td>Frete</td>
+                        <td>Valor Minimo</td>
                         <td>Ações</td>        
                     </tr>
                 </thead>
@@ -20,6 +21,7 @@
                     <tr>
                         <td>{{$item->city}}</td>
                         <td>{{number_format($item->frete, 2, ',', '.')}}</td>
+                        <td>{{number_format($item->valor_minimo, 2, ',', '.')}}</td>
                         <td>
                             <a href="{{route('admincities.edit', $item->id)}}" class="btn btn-link">
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>

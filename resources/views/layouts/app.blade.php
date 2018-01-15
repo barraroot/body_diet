@@ -16,14 +16,14 @@
 <body>
     <div id="app">
         @php
-            $navbar = Navbar::withBrand(config('app.name'), route('admindashboard'))->inverse();
+            $navbar = Navbar::withBrand(config('app.name') . ' 1.4', route('admindashboard'))->inverse();
             if(Auth::check())
             {
                 $arrayLinks = [
                     ['link' => route('adminusers.index'), 'title' => 'Usuários'],
                     ['link' => route('admincategories.index'), 'title' => 'Categorias'],
                     ['link' => route('adminproducts.index'), 'title' => 'Produtos'],
-                    ['link' => route('admincities.index'), 'title' => 'Cidades/Frete'],
+                    ['link' => route('admindiccountrules.index'), 'title' => 'Regras para Desconto'],
                     ['link' => route('adminclients.index'), 'title' => 'Clientes'],
                     ['link' => route('adminorders.index'), 'title' => 'Pedidos'],
                     ['link' => route('admincoupons.index'), 'title' => 'Cupons'],
@@ -60,6 +60,7 @@
                 $subArray = [ 
                     [
                         'Submenu', [ 
+                            ['link' => route('admincities.index'), 'title' => 'Cidades/Frete'],
                             ['link' => route('admincontacts.index'), 'title' => 'Contatos'],
                             ['link' => route('adminmidia.index'), 'title' => 'Midias/Banners'],
                             ['link' => route('adminfaq.index'), 'title' => 'FAQ'],
@@ -80,7 +81,7 @@
 
     @if(Session::has('message'))
         <div class="container hidden-print">
-            {!! Alert::success(Session::get('message'))->close() !!}
+            {!! Alert::warning(Session::get('message'))->close() !!}
         </div>
     @endif
     @yield('content')

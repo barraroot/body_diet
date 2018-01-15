@@ -4,14 +4,17 @@
 <div id="inside-page" class="carrinho">
 	<div class="container">
 		<div class="row">
-			<h3>Pagamento</h3>
+			<h3>Pagamentos processados por<br /><img src="{{asset('images/pagseguro-logo-1.jpg')}}" class="img-responsive" width="300px"></h3>
+			<br />
 				<div class="row">
 					<div class="col-md-2"></div>
 					<div class="col-md-8">
 						<ul class="nav nav-tabs">
-						  <li><a data-toggle="tab" href="#home" id="tabCC">Cartão de crédito</a></li>
-						  <!--<li><a data-toggle="tab" href="#menu1" id="tabDC">Débito em conta</a></li>-->
-						  <li><a data-toggle="tab" href="#menu2" id="tabDB">Depósito bancario</a></li>
+						  <li>
+						  	<a data-toggle="tab" href="#home" id="tabCC"><img src="{{asset('images/cartao.jpg')}}" class="img-responsive" width="80px" />Cartão de crédito</a>
+						  </li>
+						  <li><a data-toggle="tab" href="#menu1" id="tabDC"><img src="{{asset('images/transferencia.jpg')}}" class="img-responsive" width="80px" />Débito em conta</a></li>
+						  <li><a data-toggle="tab" href="#menu2" id="tabDB"><img src="{{asset('images/deposito.jpg')}}" class="img-responsive" width="80px" />Depósito bancario</a></li>
 						</ul>
 						<br />
 						<div class="tab-content">
@@ -141,17 +144,15 @@
 							{!! Form::close() !!}
 							<!--FIM Informações para cartão de crédito -->
 						  </div>
-						  <!--
 						  <div id="menu1" class="tab-pane fade">
 						  	<div class="row">
 						  		<div class="col-md-12">
 						  			<div id="payment_methods_debit" class="text-center"></div>
 						  		</div>
+								<br>
+								<hr>
 						  	</div>
-						  	<hr />
-						    <p>Account unsupported, contact suuport.</p>
 						  </div>
-						-->
 						  <div id="menu2" class="tab-pane fade">
 						    <h4>Banco do Brasil</h4>
 						    <div class="well">
@@ -190,6 +191,7 @@
 
 	$('#cardNumber').mask('0000000000000000');
 
+	var senderHash = null;
 
 	const paymentData = {
 		brand: '',
@@ -205,7 +207,7 @@
 
 	$('#tabCC').on('click', function() {
 
-		$.get('{{route('loja.formapagamento', 'Cardão de Crédito')}}');
+		$.get('{{route('loja.formapagamento', 'Cartão de Crédito')}}');
 
 		pagSeguro.getPaymentMethods(paymentData.amount)
 			.then(function(urls) {
@@ -223,14 +225,41 @@
 
 		pagSeguro.getPaymentMethodsDebit(paymentData.amount)
 			.then(function(urls) {
-				let html = '';
+				pagSeguro.getSenderHash().then(function(hash) {
+					return hash;
+				})
+				.then((hash) => {
+					let html = '';
+					urls.forEach(function(item){
+						let banco = '';
+						let displayBanco = '';
+						if(item.indexOf("bb") != -1) {
+							banco = 'bancodobrasil';
+							displayBanco = 'Banco do Brasil';
+						}
+						if(item.indexOf("itau") != -1) {
+							banco = 'itau';
+							displayBanco = 'Banco Itau';
+						}
+						if(item.indexOf("banrisul") != -1) {
+							banco = 'banrisul';
+							displayBanco = 'Banco Banrisul';
+						}
+						if(item.indexOf("bradesco") != -1) {
+							banco = 'bradesco';				
+							displayBanco = 'Bradesco';
+						}										
 
-				urls.forEach(function(item){
-					html += '<img src="'+ item +'" />';
+						html += '<a href="{{route('loja.payment.debito')}}/'+ banco +'/'+ hash +'" target="_blank"><img src="'+ item +'" /><b>' + displayBanco + '<b></a>';
+					});
+					$('#payment_methods_debit').html(html);
 				});
-				$('#payment_methods_debit').html(html);
 			});
 	});	
+
+	function escreveSenderHash(hash) {
+		senderHash = hash;
+	}
 
 	$('#cardNumber').on('keyup', function(){
 		if($(this).val().length >= 6) {

@@ -4,7 +4,7 @@
 <div id="inside-page" class="carrinho">
 	<div class="container">
 		<div class="row">
-			<h3>Detalhe do pedido #{{$order->id}}</h3>
+			<h3>Detalhe do pedido Nº Pedido: {{$order->id}}</h3>
 			<hr />			
 			<div class="col-md-3">
 				<h4>Menu do usuário</h4>

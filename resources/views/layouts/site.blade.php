@@ -49,6 +49,7 @@
                         <li><a href="{{route('loja.faqs')}}">Como funciona</a></li>
                         <li><a href="{{route('site.midia')}}">Mídia</a></li>
                         <li><a href="{{route('site.contato')}}">Fale Conosco</a></li>
+                        <li><a href="{{route('site.franquia')}}">Seja um Franqueado</a></li>
                         <!--
                         @if(session('login'))
                             <li><a href="{{route('loja.minhaconta')}}">Minha conta</a></li>

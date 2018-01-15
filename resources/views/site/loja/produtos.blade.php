@@ -52,7 +52,7 @@
 						@endphp
 						<div class="row">
 							<div class="col-md-3 hidden-xs text-right">
-								<img src="{{asset('images/produtos/'.$product->img)}}" class="img-rounded" alt="{{$product->title}}" width="30%" />
+								<img src="{{asset('images/produtos/'.$product->img_mini)}}" class="img-rounded" alt="{{$product->title}}" />
 							</div>
 							<div class="col-md-4 col-xs-7">
 								<b><a href="{{route('loja.produto', [$nomeProduto,  $product->id])}}">{{$product->title}}</a></b>
@@ -61,7 +61,7 @@
 							</div>
 							<div class="col-md-2 col-xs-2 text-right">R$ {{number_format($product->price, 2, ',', '.')}}</div>
 							<div class="col-md-3 col-xs-3">
-								<form class="form-inline frmProduto" action="{{route('loja.formitemadd', [$product->id, $nomeProduto])}}" id="frmComprar{{$product->id}}" method="post">
+								<form class="form-inline frmProduto" action="{{route('loja.formitemadd', [$product->id, $nomeProduto])}}" id="frmComprar{{$product->id}}" produto-id="{{$product->id}}" method="post">
 									{{ csrf_field() }}
 									<input type="hidden" name="produto_id" value="{{$product->id}}" >
 									<input type="hidden" id="preco{{$product->id}}" name="preco{{$product->id}}" value="{{$product->price}}" >													

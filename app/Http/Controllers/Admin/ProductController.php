@@ -42,12 +42,82 @@ class ProductController extends AppController
         ]);
 
         $imageName = $result->id .'.'. request()->foto->getClientOriginalExtension();
+        $imageMiniName = $result->id .'_mini.'. request()->foto->getClientOriginalExtension();
+        $save_path = public_path() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'produtos';
+
+        $request->file('foto')->move($save_path, $imageName);
+
+        $img = \Image::make($save_path . DIRECTORY_SEPARATOR . $imageName);
+        if($img->width() > 380)
+        {
+            $img->resize(380, null, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+        }
+
+        if($img->height() > 380)
+        {
+            $img->resize(null, 380, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+        }        
+
+        $img->save($save_path . DIRECTORY_SEPARATOR . $imageName);
+
+        $imgMini = \Image::make($save_path . DIRECTORY_SEPARATOR . $imageName);
+
+        $imgMini->resize(null, 80, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+
+        $imgMini->save($save_path . DIRECTORY_SEPARATOR . $imageMiniName);
 
         $data['id'] = $result->id;
         $data['img'] = $imageName;
+        $data['img_mini'] = $imageMiniName;
 
         $result->update($data);
 
-        request()->foto->move(public_path('images/produtos'), $imageName);
-    }     
+        //$request->file('foto')->move($save_path, $imageName);
+    }
+
+    public function beforeDelete($result)
+    {
+        $retorno = true;
+
+        $order_items = \App\OrderItem::where('product_id', '=', $result->id)->get();
+        if(count($order_items) > 0)
+        {
+            session()->flash('message', 'Este produto já foi vendido na loja, não pode ser excluido.');
+            $retorno = false;
+        }
+
+        return $retorno;
+    }
+
+    public function statusProduto($id, $status)
+    {
+        $status = $status == 1 ? 0 : 1;
+        $produto = \App\Product::findOrFail($id);
+        $produto->update(['ativo' => $status]);
+
+        return redirect()->route('adminproducts.index')->with('message', 'Produto '. $produto->title .', '. ($status == 1 ? "Ativo" : "Inativo") .' com sucesso.');        
+    }
+
+    public function afterEdit(&$result)
+    {
+        $this->trataCampoDecimalEdit($result, 'price');
+        $this->trataCampoDecimalEdit($result, 'kcal');
+        $this->trataCampoDecimalEdit($result, 'kcal_grama');
+        $this->trataCampoDecimalEdit($result, 'carboidrato');
+        $this->trataCampoDecimalEdit($result, 'carboidrato_grama');
+        $this->trataCampoDecimalEdit($result, 'proteina');
+        $this->trataCampoDecimalEdit($result, 'proteina_grama');
+        $this->trataCampoDecimalEdit($result, 'gorduras');
+        $this->trataCampoDecimalEdit($result, 'gorduras_grama');
+        $this->trataCampoDecimalEdit($result, 'liquido');
+        $this->trataCampoDecimalEdit($result, 'liquido_grama');
+        $this->trataCampoDecimalEdit($result, 'sodio');
+        $this->trataCampoDecimalEdit($result, 'sodio_grama');        
+    } 
 }

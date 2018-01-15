@@ -12,6 +12,7 @@ class ContactController extends AppController
         $this->model = $model;
         $this->localView = 'contacts';
         $this->routerController = 'contacts';
+        $this->defaultOrderPosition = 'desc';
     }
 
     public function visto($id)

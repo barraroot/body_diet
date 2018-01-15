@@ -15,6 +15,7 @@ Route::get('/', 'LojaController@index')->name('loja.produtos');
 Route::get('/como-funciona/{id}', 'LojaController@faqdetails')->name('loja.faqdetails');
 Route::get('/midia', 'LojaController@midia')->name('site.midia');
 Route::get('/contato', 'SiteController@contato')->name('site.contato');
+Route::get('/seja-um-franqueado', 'LojaController@franquia')->name('site.franquia');
 Route::post('/enviar-contato', 'LojaController@contato')->name('loja.contato');
 /** Carrinho **/
 Route::get('/carrinho', 'LojaController@carrinho')->name('loja.carrinho');
@@ -182,6 +183,86 @@ Route::post('/checkout', function(Request $request){
     else       
         return redirect()->route('loja.fazlogin');
 })->name('loja.payment.credit');
+
+//Integração Débito em conta
+Route::get('/checkout/debito/{banco?}/{senderhash?}', function(Request $request, $banco, $senderhash){
+    if(request()->session()->has('login'))
+    {
+        if(!request()->session()->has('carrinho'))
+            return redirect()->route('loja.produtos')->with('status', 'É preciso colocar itens no seu carrinho para poder finalizar a compra.');
+
+        $pedido = App\Order::with('client')->findOrFail(session()->get('carrinho'));
+
+        $data = request()->all();
+        unset($data['_token']);
+
+
+        //Dados do Vendedor
+        $data['token'] = '4A2D219550EB40058D0A58B4C7817427';
+        $data['email'] = 'contato@bodydiet.com.br';
+        $data['receiverEmail'] = 'contato@bodydiet.com.br';
+        $data['paymentMode'] = 'default';
+        $data['paymentMethod'] = 'eft';
+        $data['currency'] = 'BRL';
+        $data['bankName'] = $banco;
+
+        //Itens da venda
+        $itens = App\OrderItem::with('product')->where('order_id', '=', session()->get('carrinho'))->get();
+        for ($i=0; $i < count($itens); $i++) 
+        { 
+            $data['itemId'. ($i+1)] = $itens[$i]->product_id;
+            $data['itemDescription'. ($i+1)] = $itens[$i]->product->title;
+            $data['itemAmount'. ($i+1)] = number_format($itens[$i]->preco, 2, '.', '');
+            $data['itemQuantity'. ($i+1)] = number_format($itens[$i]->qtde, 0, '.', '');
+        }
+
+        //Informações do comprador
+        $data['reference'] = $pedido->id;
+        $data['senderHash'] = $senderhash;
+        $data['senderName'] = $pedido->client->nome;
+        $data['senderCPF'] = trim(str_replace("-", "", str_replace(".", "", $pedido->client->cpf)));
+        $senderPhone = str_replace(' ', '', str_replace('-', '', str_replace(')', '', str_replace('(', '', $pedido->client->telefone))));
+        $data['senderAreaCode'] = substr($senderPhone, 0, 2);
+        $data['senderPhone'] = substr($senderPhone, 2, strlen($senderPhone));
+        $data['senderEmail'] = $pedido->client->email;        
+
+        //Dados de Entrega
+        $data['shippingAddressStreet'] = $pedido->client->endereco;
+        $data['shippingAddressNumber'] = $pedido->client->numero;
+        $data['shippingAddressComplement'] = $pedido->client->complemento;
+        $data['shippingAddressDistrict'] = $pedido->client->bairro;
+        $data['shippingAddressPostalCode'] = $pedido->client->cep;
+        $data['shippingAddressCity'] = $pedido->client->cidade;
+        $data['shippingAddressState'] = $pedido->client->estado;
+        $data['shippingAddressCountry'] = "BR";
+        $data['shippingCost'] = number_format($pedido->frete, 2, '.', '');
+        $data['shippingType'] = 3;
+
+        //dd($data);
+        //exit;
+
+        try {
+
+            $response = (new PagSeguro)->request(PagSeguro::CHECKOUT, $data);
+            //return redirect()->route('loja.pedido.pago');
+
+            $simple = new \SimpleXMLElement($response->getContents());
+
+            $arr = json_decode( json_encode($simple) , 1);  
+            header('Location:'. $arr['paymentLink']);
+            exit;            
+
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'Erro', 'erro' => 'Pagamento Reprovado - '. $e->getMessage()]);
+        }
+
+        return $data;
+
+    }
+    else       
+        return redirect()->route('loja.fazlogin');
+})->name('loja.payment.debito');
+
 Route::get('/pagamento-aprovado', 'LojaController@pagamentoAprovado')->name('loja.pedido.pago');
 
 Route::get('/loja/veremail/{email}', function(Request $request, $email){
@@ -342,6 +423,7 @@ Route::prefix('admin')->group(function() {
         Route::resource('users', 'UserController');
         Route::resource('categories', 'CategoryController');
         Route::resource('products', 'ProductController');
+        Route::get('/products/status/{id}/{status}', 'ProductController@statusProduto')->name('products.status');
         Route::resource('cities', 'CityController');
         Route::resource('faq', 'FaqController');
         Route::resource('clients', 'ClientsController');
@@ -352,6 +434,8 @@ Route::prefix('admin')->group(function() {
         Route::resource('coupons', 'CouponController');
         Route::get('/contacts/visto/{id}', 'ContactController@visto')->name('contacts.visto');
         Route::post('/orders/status', 'OrderController@atualizastatus')->name('atualizaStatus');
+        Route::get('/orders/excluir/{id}', 'OrderController@excluir')->name('orders.excluir');
+        Route::resource('diccountrules', 'DisccountRuleController');
     });
 
 });

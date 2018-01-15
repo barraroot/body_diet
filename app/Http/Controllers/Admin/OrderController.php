@@ -57,4 +57,16 @@ class OrderController extends Controller
 
       return back();
     }
+
+    public function excluir($id)
+    {
+        $order = \App\Order::findOrFail($id);
+        if($order->status != 'Cancelado') {
+            return redirect()->route('adminorders.index')->with('message', 'Só é possivel excluir pedidos com status cancelado.');
+        } else {
+            \App\OrderItem::where('order_id', '=', $order->id)->delete();
+            $order->delete();
+            return redirect()->route('adminorders.index')->with('message', 'Pedido '. $order->id .', excluido com sucesso.');
+        }
+    }
 }

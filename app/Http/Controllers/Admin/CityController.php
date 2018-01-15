@@ -18,6 +18,7 @@ class CityController extends AppController
 
     public function beforeSave(Request $request)
     {
-    	$this->trataCampoDecimal('frete');
+        $this->trataCampoDecimal('frete');
+        $this->trataCampoDecimal('valor_minimo');
     }    
 }

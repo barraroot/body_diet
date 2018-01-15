@@ -87,24 +87,28 @@
 								<table class="table table-hover">
 									<thead>
 										<tr>
-											<th>Descrição</th>
-											<th>Categoria</th>
+											<th>Código</th>
+											<th>Produto</th>
 											<th>Quantidade</th>
+											<th>Preço</th>
 											<th class="hidden-xs">Ações</th>
 										</tr>
 									</thead>
 									<tbody>
+										@foreach($maisVendidos as $item)
 										<tr>
-											<td>&nbsp;</td>
-											<td>&nbsp;</td>
-											<td>&nbsp;</td>
+											<td>{{$item->product_id}}</td>
+											<td>{{$item->title}}</td>
+											<td>{{$item->quantidade}}</td>
+											<td>{{number_format($item->price, 2, ',', '.')}}</td>
 											<td>
 												<a href="#"></a>
 											</td>
 											<td class="hidden-xs">
-												<a class="btn btn-xs btn-warning" href="#">Visualizar</a>
+												<a class="btn btn-xs btn-warning" href="{{route('adminproducts.show', $item->product_id)}}">Visualizar</a>
 											</td>
 										</tr>
+										@endforeach
 									</tbody>
 								</table>
 							</div>

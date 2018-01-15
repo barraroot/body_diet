@@ -178,6 +178,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
     ],
 
@@ -233,6 +234,8 @@ return [
         'Icon' => Bootstrapper\Facades\Icon::class,
         'Navbar' => Bootstrapper\Facades\Navbar::class,
         'Navigation' => Bootstrapper\Facades\Navigation::class,
+        'Alert' => Bootstrapper\Facades\Alert::class,
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];

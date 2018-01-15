@@ -37,6 +37,18 @@
                     <td>{{$result->cidade}}</td>
                 </tr>
                 <tr>
+                    <th scope="row">Disponibilidade de investimento</th>
+                    <td>{{$result->valor}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Irá operar a loja em parceria de outra pessoa? (sócio, etc)</th>
+                    <td>{{$result->socio}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Tem alguma experiência como empresário ou com o comércio?</th>
+                    <td>{{$result->experiencia}}</td>
+                </tr>
+                <tr>
                     <th scope="row">Mensagem</th>
                     <td>{{$result->mensagem}}</td>
                 </tr>

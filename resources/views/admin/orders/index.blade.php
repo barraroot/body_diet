@@ -26,20 +26,30 @@
                     <td>{{$item->id}}</td>
                     <td
                         @if($item->status == 'Pendente')
-                        class="bg-warning text-primary"
+                        class="bg-warning text-warning"
                         @elseif($item->status == 'Cancelado')
                         class="bg-danger text-danger"
+                        @elseif($item->status == 'Entregue')
+                        class="bg-success text-success"
+                        @elseif($item->status == 'Aguardando Entrega')
+                        class="bg-primary text-primary"
                         @endif
                     >{{$item->status}}</td>
                     <td>{{$item->forma_pagamento}}</td>
-                    <td>{{date_format($item->updated_at, 'd/m/Y')}}</td>
+                    <td>
+                        @php
+                        $date = $item->updated_at;
+                        echo date('d/m/Y H:i', strtotime("$date - 2 hours"));
+                        //date_format($item->updated_at, 'd/m/Y H:i')
+                        @endphp
+                    </td>
                     <td>{{$item->nome}}</td>
                     <td>{{$item->email}}<br /><a href="https://api.whatsapp.com/send?phone=55{{str_replace("-", "", str_replace(")", "", str_replace("(", "", $item->telefone)))}}" target="_blank">{{$item->telefone}}</a></td>
                     <td>{{$item->cidade .'/'. $item->estado}}</td>
                     <td>{{number_format($item->frete, 2, ",", ".")}}</td>
                     <td>{{number_format($item->desconto, 2, ",", ".")}}</td>
                     <td>{{number_format($item->total, 2, ",", ".")}}</td>
-                    <td><a href="{{route('adminorders.show', $item->id)}}">Detalhe</a>&nbsp;|&nbsp;<a href="#" onclick="abreMoidal({{$item->id}}, '{{$item->status}}')">Alterar Status</a></td>
+                    <td><a href="{{route('adminorders.show', $item->id)}}">Detalhe</a>&nbsp;|&nbsp;<a href="#" onclick="abreMoidal({{$item->id}}, '{{$item->status}}')">Alterar Status</a>&nbsp;|&nbsp;<a href="{{route('adminorders.excluir', $item->id)}}">Excluir</a></td>
                 </tr>
                 @endforeach
             </table>
@@ -60,7 +70,6 @@
         <div class="form-group">
             <select name="status" id="txtStatus" class="form-control">
                 <option value="Pendente">Pendente</option>
-                <option value="Cancelado">Cancelado</option>
                 <option value="Cancelado">Cancelado</option>
                 <option value="Aguardando Pagamento">Aguardando Pagamento</option>
                 <option value="Aguardando Entrega">Aguardando Entrega</option>

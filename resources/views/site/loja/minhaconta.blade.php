@@ -12,7 +12,6 @@
 				<h4>Menu do usuário</h4>
 				<ul>
 					<li><a href="{{route('loja.minhaconta')}}">Meus Pedidos</a></li>
-					<li><a href="{{route('loja.minhaconta.pontos')}}">Meus Pontos</a></li>
 					<li><a href="{{route('loja.minhaconta.dados')}}">Alterar meus dados</a></li>
 					<li><a href="{{route('loja.minhaconta.altersenha')}}">Alterar Senha</a></li>
 					<li><a href="{{route('loja.logout')}}">Sair</a></li>
@@ -23,6 +22,7 @@
 				<table class="table">
 					<thead>
 						<tr>
+							<td>Nº Pedido</td>
 							<td>Dia</td>
 							<td>Status</td>
 							<td>Entrega</td>
@@ -35,6 +35,7 @@
 					<tbody>
 						@foreach($orders as $order)
 						<tr>
+							<td>{{$order->id}}</td>
 							<td>{{date_format($order->created_at, 'd/m/Y')}}</td>
 							<td>{{$order->status}}</td>
 							<td>{{$order->endereco}}</td>

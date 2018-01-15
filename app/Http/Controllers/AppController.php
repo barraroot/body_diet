@@ -11,6 +11,7 @@ class AppController extends Controller
     protected $listBox = [];
     protected $resultView;
     protected $defaultOrder = 'id';
+    protected $defaultOrderPosition = 'asc';
     protected $defaultWhere = [];
     protected $dataForm = null;
     /**
@@ -26,7 +27,7 @@ class AppController extends Controller
           $order = explode(',', $order);
         }
         $order[0] = $order[0] ?? $this->defaultOrder;
-        $order[1] = $order[1] ?? 'asc';
+        $order[1] = $order[1] ?? $this->defaultOrderPosition;
         $where = $request->all()['where'] ?? [];
         $like = $request->all()['like'] ?? null;
         if ($like) {
@@ -115,6 +116,8 @@ class AppController extends Controller
         $result = $this->model->with($this->relationships())
           ->findOrFail($id); 
 
+        $this->afterEdit($result);
+
         return view('admin.'. $this->localView .'.edit', compact('result', 'itens'));
     }    
     /**
@@ -142,9 +145,27 @@ class AppController extends Controller
     public function destroy($id)
     {
       $result = $this->model->findOrFail($id);
-      $result->delete();
+      if($this->beforeDelete($result)) {
+            $result->delete();
+            $this->afterDelete($result);
+        }
       return redirect()->route('admin'. $this->routerController .'.index');
     }
+
+    public function beforeDelete($result)
+    {
+        return true;
+    }
+
+    public function afterDelete($result)
+    {
+        
+    } 
+    
+    public function afterEdit(&$result)
+    {
+        
+    }     
 
     protected function relationships()
     {
@@ -159,4 +180,10 @@ class AppController extends Controller
         $this->dataForm[$campo] = str_replace(".", "", $this->dataForm[$campo]);
         $this->dataForm[$campo] = str_replace(",", ".", $this->dataForm[$campo]);        
     }
+
+    protected function trataCampoDecimalEdit(&$obj, $campo)
+    {
+        if(!empty($obj->$campo))
+        $obj->$campo = number_format($obj->$campo, 2, ',', '.');
+    }    
 }

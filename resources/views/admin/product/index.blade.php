@@ -10,6 +10,7 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <td>#</td>
                         <td>Imagem Principal</td>
                         <td>Categoria</td>
                         <td>Titulo/Descrição</td>        
@@ -20,7 +21,8 @@
                 <tbody>
                     @foreach($result as $item)
                     <tr>
-                        <td><img class="img-responsive img-rounded" width="80px;" src="{{asset('images/produtos/' . $item->img)}}"></img></td>    
+                        <td>{{$item->id}}</td>
+                        <td><img class="img-responsive img-rounded" src="{{asset('images/produtos/' . $item->img_mini)}}"></img></td>    
                         <td>{{$item->category->category}}</td>
                         <td>
                             <b>{{$item->title}}</b>
@@ -33,11 +35,19 @@
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                 Editar
                             </a>
-                            &nbsp;|&nbsp;
+                            |
                             <a href="{{route('adminproducts.show', $item->id)}}" class="btn btn-link">
                                 <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
                                 Exibir
-                            </a>                            
+                            </a>
+                            |
+                            <a href="{{route('adminproducts.status', [$item->id, $item->ativo])}}" class="btn btn-link">
+                                @if($item->ativo == 1)
+                                <span class="glyphicon glyphicon glyphicon-stop" aria-hidden="true"></span>
+                                @else
+                                <span class="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span>
+                                @endif
+                            </a> 
                         </td>
                     </tr>
                     @endforeach

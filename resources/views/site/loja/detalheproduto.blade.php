@@ -26,9 +26,8 @@
 						<div class="panel-heading"><h4  class="modal-title">{{$product->title}}</h4></div>
 						<div class="panel-body">
 							<div class="row">
-								<div class="col-md-5">
-									<div class="img-overflow" style='background-image: url("{{asset('images/produtos/'.$product->img)}}");''>
-									</div>
+								<div class="col-md-5 text-center">
+									<img src="{{asset('images/produtos/'.$product->img)}}" align="middle" />
 								</div>
 								<div class="col-md-7">
 									<p class="description">{{$product->description}}</p>

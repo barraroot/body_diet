@@ -1,4 +1,2 @@
-[27-Oct-2017 18:31:15 UTC] PHP Warning:  require(/home/bodydietcom/vendor/composer/../guzzlehttp/promises/src/functions_include.php): failed to open stream: No such file or directory in /home/bodydietcom/vendor/composer/autoload_real.php on line 66
-[27-Oct-2017 18:31:15 UTC] PHP Fatal error:  require(): Failed opening required '/home/bodydietcom/vendor/composer/../guzzlehttp/promises/src/functions_include.php' (include_path='.:/opt/alt/php70/usr/share/pear') in /home/bodydietcom/vendor/composer/autoload_real.php on line 66
-[16-Nov-2017 00:19:40 UTC] PHP Warning:  POST Content-Length of 15947328 bytes exceeds the limit of 8388608 bytes in Unknown on line 0
-[16-Nov-2017 00:36:11 UTC] PHP Warning:  POST Content-Length of 21486617 bytes exceeds the limit of 8388608 bytes in Unknown on line 0
+[10-Jan-2018 14:35:17 UTC] PHP Warning:  POST Content-Length of 12962640 bytes exceeds the limit of 8388608 bytes in Unknown on line 0
+[10-Jan-2018 14:36:12 UTC] PHP Warning:  POST Content-Length of 12962640 bytes exceeds the limit of 8388608 bytes in Unknown on line 0

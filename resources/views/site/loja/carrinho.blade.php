@@ -14,7 +14,6 @@
 						<th>Item</th>
 						<th>Produto</th>
 						<th>Quantidade</th>
-						<th>Pontos</th>
 						<th>Preço</th>
 						<th>Total</th>
 						<th>Remover</th>
@@ -31,7 +30,6 @@
 					<td>{{$key+1}}</td>
 					<td>{{$value->product->title}}</td>
 					<td>{{$value['qtde']}}</td>
-					<td>{{$value['qtde'] * $value['pontos']}}</td>
 					<td>{{number_format($value['preco'], 2, ',', '.')}}</td>
 					<td>{{number_format(($value['total']), 2, ',', '.')}}</td>
 					<td><a href="{{route('loja.remover', [$value['id'], $nomeProduto])}}" class="btn - btn-danger">Remover</a></td>

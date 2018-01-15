@@ -8,6 +8,6 @@ use Bootstrapper\Interfaces\TableInterface;
 class Cities extends Model
 {
     protected $fillable = [
-        'city', 'frete', 
+        'city', 'frete', 'valor_minimo'
     ];
 }
