@@ -32,7 +32,7 @@ class CreateOrdersTable extends Migration
             $table->string('estado', 2)->nullable();
             $table->string('telefone', 20)->nullable();           
             $table->timestamps();
-            $table->foreign('client_id')->references('id')->on('clientes');
+            //$table->foreign('client_id')->references('id')->on('clientes');
         });
     }
 
