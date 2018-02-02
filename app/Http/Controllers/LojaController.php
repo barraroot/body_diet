@@ -14,9 +14,11 @@ use App\OrderItem;
 use App\Notifications\OrderCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class LojaController extends Controller
 {
+
     private $banners;
     private $cities;
 
@@ -28,7 +30,7 @@ class LojaController extends Controller
 
     public function index()
     {
-    	$data = Category::where('show', '=', 1)->with(['products' => function($query){
+    	$data = Category::with(['products' => function($query){
             $query->where('ativo', '=', 1);
         }])->get();
 
@@ -215,7 +217,7 @@ class LojaController extends Controller
             $frete = $cidade[0]->frete;
             $data['frete'] = $frete;
             $totalPedido = ($total_final + $frete);
-            $desconto = ($totalPedido * ($cart->desconto_p / 100));
+            $desconto = ($total_produtos * ($cart->desconto_p / 100));
             $data['desconto'] = $desconto;
             $data['total'] =  $totalPedido - $desconto;
         }
@@ -230,7 +232,7 @@ class LojaController extends Controller
         }
         if(!isset($data['desconto']))
             $data['desconto'] = 0;
-            if(!isset($data['frete']))
+        if(!isset($data['frete']))
             $data['frete'] = 0;            
         $data['frete'] -= ($data['frete'] * ($desconto_frete/100));
         $data['total'] = (($data['total_produtos'] + $data['frete']) - $data['desconto']) - ($data['total_produtos'] * ($desconto_valor/100));
@@ -325,9 +327,9 @@ class LojaController extends Controller
         else {
             $request->session()->put('login', $user[0]);
         if($request->session()->has('carrinho'))
-            return redirect()->route('loja.fecharpedido');   
+            return redirect()->route('loja.carrinho');   
         else
-            return redirect()->route('loja.minhaconta');
+            return redirect()->route('loja.carrinho');
         }
 
     }
@@ -450,5 +452,27 @@ class LojaController extends Controller
         $this->atualizaCarrinho();
 
         return redirect()->route('loja.carrinho');        
+    }
+
+    public function recurperarSenha(Request $request)
+    {
+        $user = \App\Client::where('email', $request->all()['email'])->get();
+        if(count($user) <= 0) {
+            return redirect()->route('loja.recuperarsenha')->with('status', 'E-mail não cadastrado. Informe um email valido para recuperar a senha.');
+        } else {
+            $data['user'] = $user[0];
+            $data['link'] = url('/password-recorvery/'. base64_encode($user[0]->id)); 
+
+            Mail::send('emails.passwordrecover', compact('data'), function ($message) use ($user)
+            {
+    
+                $message->from('lucas.carvalho@microcenterrc.com.br', 'Lucas Carvalho');
+                $message->subject('Recuperação de senha Body Diet');
+                $message->to($user[0]->email);
+    
+            });        
+            return view('site.loja.linkenviado', compact('user'));
+            //return view('emails.passwordrecover', compact('data'));
+        }        
     }
 }

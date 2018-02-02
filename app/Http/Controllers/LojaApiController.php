@@ -131,8 +131,9 @@ class LojaApiController extends Controller
     private function atualizaCarrinho($carrinho, $status = 'Pendente')
     {
         $cart = Order::findOrFail($carrinho);
+
         $total_produtos = 0;
-        $total_pontos = 0;        
+        $total_pontos = 0;       
 
         $items = \App\OrderItem::where('order_id', '=', $cart->id)->get();
 
@@ -160,6 +161,7 @@ class LojaApiController extends Controller
             $data['email'] = $client->email;
             $data['client_id'] = $client->id;
             $data['telefone'] = $client->telefone;
+            $data['nome'] = $client->nome;
         }
 
         $cidade = \App\Cities::where('city', '=', $cart->cidade)->get();
@@ -167,9 +169,26 @@ class LojaApiController extends Controller
         {
             $frete = $cidade[0]->frete;
             $data['frete'] = $frete;
-            $data['total'] =  $total_final + $frete;
+            $totalPedido = ($total_final + $frete);
+            $desconto = ($total_produtos * ($cart->desconto_p / 100));
+            $data['desconto'] = $desconto;
+            $data['total'] =  $totalPedido - $desconto;
         }
 
+        //Regras para desconto
+        $regras = \App\DisccountRule::where([['valido', '>=', date('Y-m-d')],['valor', '<=', number_format($data['total_produtos'], 2, '.', '')]])->get();
+        $desconto_frete = 0;
+        $desconto_valor = 0;
+        foreach ($regras as $item) {
+            $desconto_frete += $item['diccount_frete'];
+            $desconto_valor += $item['diccount_order'];
+        }
+        if(!isset($data['desconto']))
+            $data['desconto'] = 0;
+        if(!isset($data['frete']))
+            $data['frete'] = 0;            
+        $data['frete'] -= ($data['frete'] * ($desconto_frete/100));
+        $data['total'] = (($data['total_produtos'] + $data['frete']) - $data['desconto']) - ($data['total_produtos'] * ($desconto_valor/100));
         $cart->update($data);
     } 
 

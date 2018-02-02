@@ -30,7 +30,7 @@
 			    <div class="alert alert-success">
 			        {{ session('status') }}
 			    </div>
-			@endif			
+			@endif
 			@foreach ($data as $category)
 				@if(count($category->products) > 0)
 				<h3>{{$category->category}}</h3>

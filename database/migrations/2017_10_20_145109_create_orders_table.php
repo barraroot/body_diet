@@ -17,9 +17,9 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->integer('client_id')->nullable()->unsigned();
             $table->string('status', 60)->nullable()->default('Pendente');
-            $table->decimal('total_produtos', 5, 2)->nullable()->unsigned();
-            $table->decimal('frete', 5, 2)->nullable()->unsigned();
-            $table->decimal('total', 5, 2)->nullable()->unsigned();
+            $table->decimal('total_produtos', 13, 2)->nullable()->unsigned();
+            $table->decimal('frete', 13, 2)->nullable()->unsigned();
+            $table->decimal('total', 13, 2)->nullable()->unsigned();
             $table->integer('pontos')->nullable()->unsigned();
             $table->text('obs')->nullable();
             $table->string('email', 200)->nullable();

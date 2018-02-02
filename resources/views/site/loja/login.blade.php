@@ -175,6 +175,8 @@
                         <div class="form-group">
                             {!! Form::label('senha', 'Senha') !!}
                             {!! Form::password('senha', ['class' => 'form-control', '', 'required' => true, 'id' => 'txtSenha']) !!}
+                            <br />
+                            <p><a href="/recuperar-senha">Não lembro minha senha.</a></p>
                         </div>
                     </div>
                     <div class="col-md-12">

@@ -10,7 +10,6 @@
 				<h4>Menu do usuário</h4>
 				<ul>
 					<li><a href="{{route('loja.minhaconta')}}">Meus Pedidos</a></li>
-					<li><a href="{{route('loja.minhaconta.pontos')}}">Meus Pontos</a></li>
 					<li><a href="{{route('loja.minhaconta.dados')}}">Alterar meus dados</a></li>
 					<li><a href="{{route('loja.minhaconta.altersenha')}}">Alterar Senha</a></li>
 					<li><a href="{{route('loja.logout')}}">Sair</a></li>

@@ -31,6 +31,41 @@ Route::get('/pedido-nao-atendido', 'LojaController@pedidoNaoAtendido')->name('lo
 Route::get('/retornar-carrinho/{id}', 'LojaController@retornaCarrinho')->name('loja.retornacarrinho');
 Route::get('/fechar-carrinho/{id}', 'LojaController@fecharCarrinhoAjax')->name('loja.fecharcarrinhoajax');
 Route::post('/desconto-pedido', 'LojaController@aplicaDesconto')->name('loja.descontopedido');
+Route::get('/recuperar-senha', function(){
+    return view('site.loja.recuperarsenha');
+})->name('loja.recuperarsenha');
+Route::post('/enviar-link', 'LojaController@recurperarSenha')->name('postrecuperarsenha');
+Route::get('/password-recorvery/{user}', function($user) {
+    $user = \App\Client::findOrFail(base64_decode($user));
+    if($user)
+    {
+        return view('site.loja.passwordrecovery', compact('user'));
+    }
+});
+Route::post('/trocar-senha', function(){
+    $user = \App\Client::findOrFail(request()->input('user'));
+    if(!$user)
+    {
+        return back()->with('status', 'Link de recuperação de senha invalido.');
+    }
+    else
+    {
+        $senha = request()->input('senha');
+        $resenha = request()->input('re-senha');
+        if($senha !== $resenha)
+        {
+            return back()->with('status', 'A senha e confirmação de senha não são iguais.');
+        }
+        else
+        {
+            //$user = $user[0];
+            $user->update(['senha' => $senha]);
+            request()->session()->put('login', $user);
+            return redirect()->route('loja.produtos')->with('status', 'Senha alterada com sucesso, login efetuado automatico.');
+        }
+    }
+    dd(request()->all());
+})->name('loja.trocasenha');
 /** Checout **/
 Route::get('/checkout', function(Request $request){
     if(request()->session()->has('login'))
