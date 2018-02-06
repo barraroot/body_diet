@@ -170,8 +170,16 @@
 					<div class="col-md-2"></div>
 				</div>
 				<div class="row">
-					<div class="col-md-4"></div>
-					<div class="col-md-6">
+					<div class="col-md-2"></div>
+					<div class="col-md-4 text-left">
+						<address>
+							<strong>Endereço de entrega</strong><br>
+							{{$carrinho->endereco . ', N. '. $carrinho->numero . ' - '. $carrinho->bairro .' '. $carrinho->complemento}}<br>
+							{{$carrinho->cidade . '/'. $carrinho->estado . ' CEP: '. $carrinho->cep}}<br>
+							<abbr title="Phone">Telefone:</abbr> {{$carrinho->telefone}}
+						</address>
+					</div>
+					<div class="col-md-4">
 						<h4 class="text-right"><b>Total Produtos:</b> R$ {{number_format($carrinho['total_produtos'], 2, ',', '.')}}</h4>
 						<h4 class="text-right"><b>Frete:</b> <span id="valFRETE">R$ {{number_format($carrinho['frete'], 2, ',', '.')}}</span></h4>
 						<h4 class="text-right"><b>Desconto:</b> <span id="valFRETE">R$ {{number_format($carrinho['desconto'], 2, ',', '.')}}</span></h4>

@@ -12,5 +12,6 @@ class CategoryController extends AppController
         $this->model = $model;
         $this->localView = 'category';
         $this->routerController = 'categories';
+        $this->defaultOrder = 'ordem';
     }
 }

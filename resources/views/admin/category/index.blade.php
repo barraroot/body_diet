@@ -10,6 +10,8 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <td>#</td>
+                        <td>Ordem</td>
                         <td>Descrição</td>
                         <td>Ações</td>        
                     </tr>
@@ -17,6 +19,8 @@
                 <tbody>
                     @foreach($result as $item)
                     <tr>
+                        <td>{{$item->id}}</td>
+                        <td>{{$item->ordem}}</td>
                         <td>{{$item->category}}</td>
                         <td>
                             <a href="{{route('admincategories.edit', $item->id)}}" class="btn btn-link">

@@ -75,10 +75,10 @@
 			<div class="row">
 				<div class="col-md-4"></div>
 				<div class="col-md-4">
-					@if($carrinho['total_produtos'] > 150)
+					@if($carrinho['total_produtos'] > $city['valor_minimo'])
 					<a href="{{route('loja.fecharpedido')}}" id="btnFinalizar" class="btn btn-success btn-block btn-lg">Finalizar Compra</a>
 					@else
-					<p class="text-center text-alert">Pedido minimo de R$ 150,00</p>
+					<p class="text-center text-alert">Pedido minimo de R$ {{$city['valor_minimo']}}</p>
 					<a href="{{route('loja.produtos')}}" class="btn btn-success btn-block btn-lg">Continuar Comprando</a>
 					@endif
 				</div>

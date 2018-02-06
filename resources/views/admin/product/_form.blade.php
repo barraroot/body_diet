@@ -4,13 +4,13 @@
 	{!! Form::model(null, ['files' => true, 'autocomplete' => 'false','method' => 'post', 'url' => route('adminproducts.store')]) !!}
 @endif
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-md-5">
 		<div class="form-group">
 			{!! Form::label('title', 'Titulo') !!}
 			{!! Form::input('text', 'title', null, ['class' => 'form-control', 'autofocus', 'required', 'placeholder' => 'Titulo do produto']) !!}
 		</div>		
 	</div>
-	<div class="col-md-3">
+	<div class="col-md-2">
 		<div class="form-group">
 			{!! Form::label('price', 'Preço') !!}
 			{!! Form::input('text', 'price', null, ['class' => 'form-control', 'required', '', 'placeholder' => 'Preço do produto']) !!}
@@ -22,6 +22,12 @@
 			{!! Form::input('text', 'pontos', null, ['class' => 'form-control', 'required', '', 'placeholder' => 'Pontos que o produto gera']) !!}
 		</div>		
 	</div>
+	<div class="col-md-2">
+		<div class="form-group">
+			{!! Form::label('sku', 'Cód. Barras') !!}
+			{!! Form::input('text', 'sku', null, ['class' => 'form-control', 'required', '', 'placeholder' => 'Código de Barras']) !!}
+		</div>		
+	</div>	
 	<div class="col-md-12">
 		<div class="form-group">
 			{!! Form::label('description', 'Descrição') !!}

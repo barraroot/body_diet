@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model implements TableInterface
 {
     protected $fillable = [
-        'category', 'show', 
+        'category', 'show', 'ordem'
     ];
 
     public function products()

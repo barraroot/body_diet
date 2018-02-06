@@ -32,7 +32,7 @@ class LojaController extends Controller
     {
     	$data = Category::with(['products' => function($query){
             $query->where('ativo', '=', 1);
-        }])->get();
+        }])->orderBy('ordem')->get();
 
         $siteBanners = $this->banners;
         $siteCities = $this->cities;
@@ -294,7 +294,11 @@ class LojaController extends Controller
             return redirect()->route('loja.produtos')->with('status', 'Não foi possivel ecnotrar seu carrinho. Por favor incluia os itens que deseja antes de concluir a compra.');
         }
 
-    	return view('site.loja.carrinho', compact('carrinho', 'carrinho_itens'));
+        $city = \App\Cities::where('city', '=', $carrinho->cidade)->get();
+        if(count($city) > 0)
+            $city = $city[0];
+        
+    	return view('site.loja.carrinho', compact('carrinho', 'carrinho_itens', 'city'));
     }
 
     public function novocliente(Request $request)
@@ -324,12 +328,18 @@ class LojaController extends Controller
         if(empty($user[0])) {
             return redirect()->route('loja.fazlogin')->with('status', 'Usuário ou senha invalidos');
         }
-        else {
+        else 
+        {
             $request->session()->put('login', $user[0]);
-        if($request->session()->has('carrinho'))
-            return redirect()->route('loja.carrinho');   
-        else
-            return redirect()->route('loja.carrinho');
+            if($request->session()->has('carrinho'))
+            {
+                $this->atualizaCarrinho();
+                return redirect()->route('loja.carrinho');   
+            }
+            else
+            {
+                return redirect()->route('loja.carrinho');
+            }
         }
 
     }
@@ -466,8 +476,8 @@ class LojaController extends Controller
             Mail::send('emails.passwordrecover', compact('data'), function ($message) use ($user)
             {
     
-                $message->from('lucas.carvalho@microcenterrc.com.br', 'Lucas Carvalho');
-                $message->subject('Recuperação de senha Body Diet');
+                $message->from('comercial@bodydiet.com.br', 'BodyDiet');
+                $message->subject('Recuperação de senha.');
                 $message->to($user[0]->email);
     
             });        

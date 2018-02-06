@@ -3,38 +3,38 @@
 @section('content')
 		<div class="content">
 			<div class="container-fluid">
-				<div class="row">
-					<div class="col-sm-4 text-center">
-						<div class="panel panel-info">
-							<div class="panel-heading">
-								<h3 class="panel-title">Pedidos Aguardando Entrega</h3>
+					<div class="row">
+							<div class="col-sm-4 text-center">
+								<div class="panel panel-info">
+									<div class="panel-heading">
+										<h3 class="panel-title">Pedidos Aguardando Entrega</h3>
+									</div>
+									<div class="panel-body">
+										<h3>0</h3>
+									</div>
+								</div>
 							</div>
-							<div class="panel-body">
-								<h3>0</h3>
+							<div class="col-sm-4 text-center">
+								<div class="panel panel-success">
+									<div class="panel-heading">
+										<h3 class="panel-title">Pedidos Aguardando Pagamento</h3>
+									</div>
+									<div class="panel-body">
+										<h3>{{count($paymentOrders)}}</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-4 text-center">
+								<div class="panel panel-danger">
+									<div class="panel-heading">
+										<h3 class="panel-title">Pedidos Pendentes</h3>
+									</div>
+									<div class="panel-body">
+										<h3>{{count($openOrders)}}</h3>
+									</div>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="col-sm-4 text-center">
-						<div class="panel panel-success">
-							<div class="panel-heading">
-								<h3 class="panel-title">Pedidos Aguardando Pagamento</h3>
-							</div>
-							<div class="panel-body">
-								<h3>{{count($paymentOrders)}}</h3>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-4 text-center">
-						<div class="panel panel-danger">
-							<div class="panel-heading">
-								<h3 class="panel-title">Pedidos Pendentes</h3>
-							</div>
-							<div class="panel-body">
-								<h3>{{count($openOrders)}}</h3>
-							</div>
-						</div>
-					</div>
-				</div>
 				<div class="row">
 					<div class="col-md-6">
 						<div class="panel panel-primary">

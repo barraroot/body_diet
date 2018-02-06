@@ -72,6 +72,7 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Cód Barras</th>
                             <th>Item</th>
                             <th>Quantidade</th>
                             <th>Valor Unitário</th>
@@ -83,10 +84,12 @@
                         @foreach($items as $key => $item)
                         <tr>
                             <td>{{$key+1}}</td>
+                            <td>{{$item->product->sku}}</td>
                             <td>
-                                <img src="{{asset('images/produtos/'. $item->product->img)}}" width="60px" />
-                                {{$item->product->title}}
+                                <img src="{{asset('images/produtos/'. $item->product->img_mini)}}" />
                             </td>
+                            <td>{{$item->product->title}}</td>
+                                
                             <td>{{$item->qtde}}</td>
                             <td>R$ {{number_format($item->preco, 2, ',', '.')}}</td>
                             <td>R$ {{number_format($item->total, 2, ',', '.')}}</td> 
