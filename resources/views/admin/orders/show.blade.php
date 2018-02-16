@@ -73,7 +73,8 @@
                         <tr>
                             <th>#</th>
                             <th>Cód Barras</th>
-                            <th>Item</th>
+                            <th>Prato</th>
+                            <th>Descrição</th>
                             <th>Quantidade</th>
                             <th>Valor Unitário</th>
                             <th>Total</th>

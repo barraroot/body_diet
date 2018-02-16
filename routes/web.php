@@ -127,6 +127,7 @@ Route::post('/checkout', function(Request $request){
         $data['billingAddressCountry'] = 'BR';
 
         $data['creditCardHolderCPF'] = trim(str_replace("-", "", str_replace(".", "", $data['creditCardHolderCPF'])));
+        $data['creditCardHolderBirthDate'] = substr($data['creditCardHolderBirthDate'], 8, 2) . '/'. substr($data['creditCardHolderBirthDate'], 5, 2) . '/'. substr($data['creditCardHolderBirthDate'], 0, 4);
 
         //Salvando o cartão do cliente
         $carding = \App\CreditCard::where('client_id', '=', request()->session()->get('login')['id'])
@@ -194,7 +195,7 @@ Route::post('/checkout', function(Request $request){
         //if($data['installmentQuantity'] > 1)
             //$data['noInterestInstallmentQuantity'] = 2;
 
-        //print_r($data);
+        //dd($data);
         //exit;
 
         try {

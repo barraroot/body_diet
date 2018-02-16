@@ -14,7 +14,7 @@ class AlterProduct extends Migration
     public function up()
     {
         Schema::table('categories', function (Blueprint $table) {
-            $table->integer('ordem')->unsigned();
+            $table->integer('ordem')->unsigned()->default(0);
         });
     }
 
