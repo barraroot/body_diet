@@ -152,6 +152,12 @@
 			{!! Form::file('foto', array('class' => 'form-control')) !!}
 		</div>			
 	</div>
+	<div class="row">
+		<div class="form-group">
+			{!! Form::label('foto2', 'Foto Detalhe') !!}
+			{!! Form::file('foto2', array('class' => 'form-control')) !!}
+		</div>			
+	</div>	
 </div>
 
 <div class="form-group">

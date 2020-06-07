@@ -305,7 +305,7 @@ class LojaController extends Controller
     {
         $userData = $request->all();
         $userData['nascimento'] = substr($userData['nascimento'], 6,4) . '-'. substr($userData['nascimento'], 3,2) . '-'. substr($userData['nascimento'], 0,2);
-        $user = Client::create();
+        $user = Client::create($userData);
         $request->session()->put('login', $user);
 
         if($request->session()->has('carrinho'))

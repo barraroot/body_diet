@@ -27,7 +27,7 @@
                     <li><a href="{{route('loja.regioes')}}">Cidades atendidas</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="https://api.whatsapp.com/send?phone=5519997158129" target="_blank"><i class="fa fa-whatsapp"></i></a></li>                    
+                    <li><a href="https://api.whatsapp.com/send?phone=5519997008001" target="_blank"><i class="fa fa-whatsapp"></i></a></li>                    
                     <li><a href="https://www.facebook.com/bodydietrc" target="_blank"><i class="fa fa-facebook"></i></a></li>
                     <li><a href="https://www.instagram.com/bodydiet_/" target="_blank"><i class="fa fa-instagram"></i></a></li>
                 </ul>
@@ -85,7 +85,7 @@
                         <p>
                             Rua 6, Nº 426, Entre a Av. 13 e 15, Jd. Dona Angela - Centro, Rio Claro - SP <br>
                             (19) 3532.2814 <br>
-                            (19)99715-8129
+                            (19)99700-8001
                         </p>
                     </div>
                     <div class="col-md-4">

@@ -164,17 +164,17 @@
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 <div class="row">
-                {!! Form::open(['url' => route('loja.login'), 'method' => 'post', 'id' => 'frmNovoLogin']) !!}
+                {!! Form::open(['url' => route('loja.login'), 'method' => 'post', 'id' => 'frmLogin']) !!}
                     <div class="col-md-12">
                         <div class="form-group">
                             {!! Form::label('email', 'E-mail') !!}
-                            {!! Form::email('email', null, ['class' => 'form-control', 'autofocus', 'placeholder' => 'seu-nome@dominio.com', 'required' => true, 'id' => 'txtEmail']) !!}
+                            {!! Form::email('email', null, ['class' => 'form-control', 'autofocus', 'placeholder' => 'seu-nome@dominio.com', 'required' => true, 'id' => 'txtLoginEmail']) !!}
                         </div>
                     </div>  
                     <div class="col-md-12">
                         <div class="form-group">
                             {!! Form::label('senha', 'Senha') !!}
-                            {!! Form::password('senha', ['class' => 'form-control', '', 'required' => true, 'id' => 'txtSenha']) !!}
+                            {!! Form::password('senha', ['class' => 'form-control', '', 'required' => true, 'id' => 'txtLoginSenha']) !!}
                             <br />
                             <p><a href="/recuperar-senha">Não lembro minha senha.</a></p>
                         </div>

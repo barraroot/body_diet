@@ -50,7 +50,7 @@
 								<i class="fa fa-map"></i> Rua 6, Nº 426, Entre a Av. 13 e 15, <br />
 								Jd. Dona Angela - Centro, Rio Claro - SP <br /><br />
 								<i class="fa fa-phone"></i> (19) 3532.2814 <br />
-								<i class="fa fa-mobile"></i> (19)99715-8129
+								<i class="fa fa-mobile"></i> (19)99700-8001
 							</p>
 							</div>
 						</div>
